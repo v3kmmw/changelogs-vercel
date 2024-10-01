@@ -1,8 +1,41 @@
 {
-    "functions": {
-      "api/**/*.js": {
-        "runtime": "nodejs@20.x" 
+    "rewrites": [
+      {
+        "source": "/changelogs",
+        "destination": "/changelogs.html"
+      },
+      {
+        "source": "/seasons",
+        "destination": "/seasons.html"
+      },
+      {
+        "source": "/timeline",
+        "destination": "/timeline.html"
+      },
+      {
+        "source": "/login",
+        "destination": "/login.html"
+      },
+      {
+        "source": "/faq",
+        "destination": "/faq.html"
+      },
+      {
+        "source": "/tos",
+        "destination": "/tos.html"
+      },
+      {
+        "source": "/privacy",
+        "destination": "/privacy.html"
+      },
+      {
+        "source": "/api",
+        "destination": "/api.html"
+      },
+      {
+        "source": "/bot",
+        "destination": "/bot.html"
       }
-    }
+    ]
   }
   
