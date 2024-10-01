@@ -61,8 +61,8 @@ app.get('/changelogs', async (req, res) => {
 
 app.get('/seasons', async (req, res) => {
   const seasonId = req.query.id; // Get the season ID from the query parameter
-  const apiUrl = `https://api.jailbreakchangelogs.xyz/seasons/get?season=${seasonId}`; // Adjust this URL based on your API
-  const rewardsUrl = `https://api.jailbreakchangelogs.xyz/rewards/get?season=${seasonId}`; // Adjust this URL based on your API
+  const apiUrl = `https://api.jailbreakchangelogs.xyz/seasons/get?season=${seasonId}`; 
+  const rewardsUrl = `https://api.jailbreakchangelogs.xyz/rewards/get?season=${seasonId}`; 
 
   try {
     const response = await fetch(apiUrl, {
@@ -73,7 +73,7 @@ app.get('/seasons', async (req, res) => {
       },
     }); 
     if (!response.ok) {
-      res.render('seasons', { season: '???', title: 'Season not found', image_url: 'https://res.cloudinary.com/dsvlphknq/image/upload/v1727054787/changelogs/changelog-image-287.png' }); 
+      return res.render('seasons', { season: '???', title: 'Season not found', image_url: 'https://res.cloudinary.com/dsvlphknq/image/upload/v1727054787/changelogs/changelog-image-287.png' }); 
     }
     const rewardsResponse = await fetch(rewardsUrl, {
       method: 'GET',
@@ -83,16 +83,21 @@ app.get('/seasons', async (req, res) => {
       },
     });
     if (!rewardsResponse.ok) {
-      res.render('seasons', { season: '???', title: 'Season not found', image_url: 'https://res.cloudinary.com/dsvlphknq/image/upload/v1727054787/changelogs/changelog-image-287.png'}); 
+      return res.render('seasons', { season: '???', title: 'Season not found', image_url: 'https://res.cloudinary.com/dsvlphknq/image/upload/v1727054787/changelogs/changelog-image-287.png'}); 
     }
-    
 
     const data = await response.json();
     const rewardsData = await rewardsResponse.json();
-    level_10_reward = rewardsData.filter(reward => reward.requirement === "Level 10");
-    console.log(level_10_reward);
-    image_url = level_10_reward.link;
     
+    // Find the Level 10 reward
+    const level_10_reward = rewardsData.find(reward => reward.requirement === "Level 10");
+
+    // Ensure we got the reward before accessing properties
+    let image_url = 'https://res.cloudinary.com/dsvlphknq/image/upload/v1727054787/changelogs/changelog-image-287.png';
+    if (level_10_reward) {
+      image_url = level_10_reward.link;
+    }
+
     const { season, title } = data; // Adjust the destructured properties based on the API response structure
     res.render('seasons', { season, title, image_url }); // Render the seasons page with the retrieved data
 
