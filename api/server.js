@@ -16,7 +16,7 @@ app.get('/changelogs', (req, res) => {
   let meta = {
     title: "Jailbreak Changelogs | Latest Updates & Patch Notes",
     description: "Get updates on Jailbreak's latest features, bug fixes, and balance changes.",
-    image: "https://res.cloudinary.com/dsvlphknq/image/upload/v1727536082/changelogs/changelog-image-344.png",
+    image: "https://res.cloudinary.com/dsvlphknq/image/upload/v1727536082/changelogs/changelog-image-341.png",
     url: "https://jailbreakchangelogs.xyz/changelogs?id=" + changelogId
   };
 
