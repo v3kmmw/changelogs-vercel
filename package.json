@@ -2,7 +2,7 @@
     "name": "jailbreak-changelogs",
     "version": "1.0.0",
     "scripts": {
-        "start": "node api/server.js"
+        "start": "node api/index.js"
     },
     "dependencies": {
         "ejs": "^3.1.10",
