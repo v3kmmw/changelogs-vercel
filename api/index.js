@@ -30,23 +30,22 @@ console.log(path.join(__dirname, '../views'));
 
 app.get('/changelogs', async (req, res) => {
   const changelogId = req.query.id;
+  const apiUrl = `https://api.jailbreakchangelogs.xyz/changelogs/get?id=${changelogId}&authorization=jbc-YJs6AA0hcfUVcae9o4jn5t6uIW94`;
 
   try {
-      // Fetch the changelog data from the API
-      const apiUrl = `https://api.jailbreakchangelogs.xyz/changelogs/get?id=${changelogId}&authorization=jbc-YJs6AA0hcfUVcae9o4jn5t6uIW94`
-      const response = await axios.get(apiUrl, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0'
-        }
-      });
-      // Extract only the title and image_url from the response data
-      const { title, image_url } = response.data; // Adjust the image_url based on your API response structure
+    const response = await fetch(apiUrl); 
 
-      // Render the EJS template and pass the metadata
-      res.render('changelogs', { title, image_url });
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`);
+    }
+
+    const data = await response.json();
+    const { title, image_url } = data;
+    res.render('changelogs', { title, image_url });
+
   } catch (error) {
-      console.error("Error fetching changelog data:", error);
-      res.status(500).send('Internal Server Error');
+    console.error("Error fetching changelog data:", error);
+    res.status(500).send('Internal Server Error');
   }
 });
 app.get('/hello', (req, res) => {
