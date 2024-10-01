@@ -47,6 +47,9 @@ app.get('/changelogs', async (req, res) => {
 
     const data = await response.json();
     const { title, image_url } = data;
+    if (!title ||!image_url) {
+      res.render('changelogs', { title: 'Changelog not found', image_url: 'https://res.cloudinary.com/dsvlphknq/image/upload/v1727054787/changelogs/changelog-image-287.png' }); // Render the changelogs page with default values
+    }
     res.render('changelogs', { title, image_url });
 
   } catch (error) {
@@ -73,7 +76,11 @@ app.get('/seasons', async (req, res) => {
     }
 
     const data = await response.json();
+    
     const { season, title } = data; // Adjust the destructured properties based on the API response structure
+    if (!season ||!title) {
+      res.render('seasons', { season: 'Season not found', title: 'Season not found' }); 
+    }// Render the seasons page with default values)
     res.render('seasons', { season, title }); // Render the seasons page with the retrieved data
 
   } catch (error) {
