@@ -177,6 +177,7 @@ $(document).ready(function () {
         (reward) => reward.season_number === season
       );
       updateCarousel(rewardsForSeason);
+      $loadingOverlay.hide();
     } catch (error) {
       console.error(`Failed to load season ${season} details:`, error);
     }
