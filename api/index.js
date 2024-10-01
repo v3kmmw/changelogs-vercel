@@ -26,17 +26,10 @@ console.log(path.join(__dirname, '../views'));
 
 app.get('/changelogs', async (req, res) => {
   const changelogId = req.query.id;
-  const path = 'http://127.0.0.1:5500'; // Replace with your own server IP and port
 
   try {
       // Fetch the changelog data from the API
-      const response = await axios.get(`https://api.jailbreakchangelogs.xyz/changelogs/get?id=${changelogId}`,
-        {
-          headers: {
-            'Origin': path // Replace with your API token
-          }
-        }
-      );
+      const response = await axios.get(`https://api.jailbreakchangelogs.xyz/changelogs/get?id=${changelogId}`,);
 
       // Extract only the title and image_url from the response data
       const { title, image_url } = response.data; // Adjust the image_url based on your API response structure
