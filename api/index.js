@@ -1,11 +1,12 @@
 const express = require('express');
 const path = require('path');
+const axios = require('axios');
 const app = express();
-const PORT = process.env.PORT || 5000; // Set the port
+const PORT = process.env.PORT || 5500; // Set the port
 const fs = require('fs');
 // Serve your static HTML, CSS, and JS files
 app.use(express.static(path.join(__dirname, '../')));
-
+console.log('Views directory:', path.join(__dirname, '../views'));
 // Serve the changelogs.html file
 app.get('/changelogs2', (req, res) => {
   const filePath = path.join(__dirname, '../changelogs.html');
@@ -19,45 +20,34 @@ app.get('/changelogs2', (req, res) => {
   });
 });
 
-app.get('/changelogs', (req, res) => {
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views')); // Set the directory for your EJS files
+console.log(path.join(__dirname, '../views'));
+
+app.get('/changelogs', async (req, res) => {
   const changelogId = req.query.id;
+  const path = 'http://127.0.0.1:5500'; // Replace with your own server IP and port
 
-  // Define the metadata based on the changelog ID
-  let title, description, image;
-  
-  if (changelogId === '1') {
-      title = "Changelog Update 1";
-      description = "Details about the first changelog update.";
-      image = "https://example.com/image1.png"; // Replace with your actual image URL
-  } else if (changelogId === '2') {
-      title = "Changelog Update 2";
-      description = "Details about the second changelog update.";
-      image = "https://example.com/image2.png"; // Replace with your actual image URL
-  } else {
-      title = "Jailbreak Changelogs | Latest Updates & Patch Notes";
-      description = "Get updates on Jailbreak's latest features, bug fixes, and balance changes.";
-      image = "https://res.cloudinary.com/dsvlphknq/image/upload/v1727536082/changelogs/changelog-image-344.png";
+  try {
+      // Fetch the changelog data from the API
+      const response = await axios.get(`https://api.jailbreakchangelogs.xyz/changelogs/get?id=${changelogId}`,
+        {
+          headers: {
+            'Origin': path // Replace with your API token
+          }
+        }
+      );
+
+      // Extract only the title and image_url from the response data
+      const { title, image_url } = response.data; // Adjust the image_url based on your API response structure
+
+      // Render the EJS template and pass the metadata
+      res.render('changelogs', { title, image_url });
+  } catch (error) {
+      console.error("Error fetching changelog data:", error);
+      res.status(500).send('Internal Server Error');
   }
-
-  // Read the base changelogs.html file
-  fs.readFile(path.join(__dirname, 'changelogs.html'), 'utf-8', (err, data) => {
-      if (err) {
-          return res.status(500).send('Internal Server Error');
-      }
-
-      // Replace the meta tags in the HTML
-      const updatedData = data
-          .replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${title}" />`)
-          .replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${description}" />`)
-          .replace(/<meta property="og:image" content=".*?" \/>/, `<meta property="og:image" content="${image}" />`)
-          .replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
-          .replace(/<meta name="description" content=".*?" \/>/, `<meta name="description" content="${description}" />`);
-
-      // Send the modified HTML back
-      res.send(updatedData);
-  });
 });
-
 app.get('/hello', (req, res) => {
     res.send('Hello, World!')});
 
