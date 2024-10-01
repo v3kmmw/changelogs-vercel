@@ -29,6 +29,8 @@ function getCookie(name) {
     return null;
 }
 
+const token = getCookie("token");
+
 
     if (!token) {
         localStorage.setItem(

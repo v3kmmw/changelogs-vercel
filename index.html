@@ -337,16 +337,4 @@
       });
   } 
   </script>
-  <script>
-    const profilepicture = document.getElementById("profile-picture");
-    const mobileprofilepicture = document.getElementById(
-      "profile-picture-mobile"
-    );
-    const avatarUrl = sessionStorage.getItem("avatar");
-    if (userid) {
-      profilepicture.src = avatarUrl;
-      mobileprofilepicture.src = avatarUrl;
-    }
-  </script>
-
 </html>
