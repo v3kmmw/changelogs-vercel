@@ -182,9 +182,6 @@ $(document).ready(function () {
     }
   }
 
-  // Show loading overlay
-  $loadingOverlay.show();
-
   // Fetch both season descriptions and rewards
   $.when(fetchSeasonDescription(), fetchSeasonRewards())
     .done((seasonDescriptionsResponse, seasonRewardsResponse) => {

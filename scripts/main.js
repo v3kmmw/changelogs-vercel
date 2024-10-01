@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const path = window.location.pathname;
     
-    // Apply only if the URL ends with .html
     if (path.endsWith(".html")) {
       const cleanUrl = path.replace(".html", "");
       window.history.pushState({}, "", cleanUrl);
@@ -47,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const mobileprofilepicture = document.getElementById(
       "profile-picture-mobile"
     );
+
     if (!profilepicture && !mobileprofilepicture) {
       return;
     }
