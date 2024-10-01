@@ -8,6 +8,10 @@ app.set('view engine', 'ejs');
 // Serve static files (CSS, JS)
 app.use(express.static(path.join(__dirname, '../')));
 
+app.get('/changelogs2', (req, res) => {
+    res.sendFile(path.join(__dirname, '../changelogs.html'));
+  });
+
 // Route to handle changelogs with optional id query parameter
 app.get('/changelogs', (req, res) => {
   const changelogId = req.query.id || 'default'; // Default to some value if no id is provided
