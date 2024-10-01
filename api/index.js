@@ -29,7 +29,7 @@ app.get('/changelogs', async (req, res) => {
 
   try {
       // Fetch the changelog data from the API
-      const response = await axios.get(`https://api.jailbreakchangelogs.xyz/changelogs/get?id=${changelogId}`,);
+      const response = await axios.get(`https://api.jailbreakchangelogs.xyz/changelogs/get?id=${changelogId}&authorization=jbc-YJs6AA0hcfUVcae9o4jn5t6uIW94`,);
 
       // Extract only the title and image_url from the response data
       const { title, image_url } = response.data; // Adjust the image_url based on your API response structure
