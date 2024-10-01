@@ -10,7 +10,6 @@ app.use(express.static(path.join(__dirname, '../')));
 app.use(cors({
   origin: 'https://vercel.jailbreakchangelogs.xyz'
 }));
-console.log('Views directory:', path.join(__dirname, '../views'));
 // Serve the changelogs.html file
 app.get('/changelogs2', (req, res) => {
   const filePath = path.join(__dirname, '../changelogs.html');
@@ -26,7 +25,6 @@ app.get('/changelogs2', (req, res) => {
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views')); // Set the directory for your EJS files
-console.log(path.join(__dirname, '../views'));
 
 app.get('/changelogs', async (req, res) => {
   const changelogId = req.query.id;
