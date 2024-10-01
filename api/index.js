@@ -33,7 +33,15 @@ app.get('/changelogs', async (req, res) => {
   const apiUrl = `https://api.jailbreakchangelogs.xyz/changelogs/get?id=${changelogId}`;
 
   try {
-    const response = await fetch(apiUrl); 
+    const response = await fetch(apiUrl,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Origin': 'https://vercel.jailbreakchangelogs.xyz'
+        },
+      }
+    ); 
 
     if (!response.ok) {
       throw new Error(`API request failed with status ${response.status}`);
