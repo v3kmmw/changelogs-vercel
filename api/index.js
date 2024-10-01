@@ -20,34 +20,41 @@ app.get('/changelogs2', (req, res) => {
 });
 
 app.get('/changelogs', (req, res) => {
-  const changelogId = req.query.id; // Get the changelog ID from the query parameter
-  
-  // Path to your changelogs.html file
-  const filePath = path.join(__dirname, '../changelogs.html');
-  
-  // Read the changelogs.html file
-  fs.readFile(filePath, 'utf8', (err, data) => {
-    if (err) {
-      return res.status(500).send('Error reading the file.');
-    }
-    
-    // Dynamically update the meta tags based on the changelog ID
-    let updatedData = data;
-    
-    if (changelogId) {
-      // Example: Change Open Graph meta tags based on changelog ID
-      const newTitle = `Changelog Update #${changelogId}`;
-      const newDescription = `Details about changelog #${changelogId}.`;
-      const newImage = `https://your-image-url.com/changelog-${changelogId}.png`;
+  const changelogId = req.query.id;
 
-      updatedData = updatedData
-        .replace(/<meta property="og:title" content="[^"]*" \/>/, `<meta property="og:title" content="${newTitle}" />`)
-        .replace(/<meta property="og:description" content="[^"]*" \/>/, `<meta property="og:description" content="${newDescription}" />`)
-        .replace(/<meta property="og:image" content="[^"]*" \/>/, `<meta property="og:image" content="${newImage}" />`);
-    }
+  // Define the metadata based on the changelog ID
+  let title, description, image;
+  
+  if (changelogId === '1') {
+      title = "Changelog Update 1";
+      description = "Details about the first changelog update.";
+      image = "https://example.com/image1.png"; // Replace with your actual image URL
+  } else if (changelogId === '2') {
+      title = "Changelog Update 2";
+      description = "Details about the second changelog update.";
+      image = "https://example.com/image2.png"; // Replace with your actual image URL
+  } else {
+      title = "Jailbreak Changelogs | Latest Updates & Patch Notes";
+      description = "Get updates on Jailbreak's latest features, bug fixes, and balance changes.";
+      image = "https://res.cloudinary.com/dsvlphknq/image/upload/v1727536082/changelogs/changelog-image-344.png";
+  }
 
-    // Send the modified HTML as the response
-    res.send(updatedData);
+  // Read the base changelogs.html file
+  fs.readFile(path.join(__dirname, 'changelogs.html'), 'utf-8', (err, data) => {
+      if (err) {
+          return res.status(500).send('Internal Server Error');
+      }
+
+      // Replace the meta tags in the HTML
+      const updatedData = data
+          .replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${title}" />`)
+          .replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${description}" />`)
+          .replace(/<meta property="og:image" content=".*?" \/>/, `<meta property="og:image" content="${image}" />`)
+          .replace(/<title>.*?<\/title>/, `<title>${title}</title>`)
+          .replace(/<meta name="description" content=".*?" \/>/, `<meta name="description" content="${description}" />`);
+
+      // Send the modified HTML back
+      res.send(updatedData);
   });
 });
 
