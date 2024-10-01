@@ -90,6 +90,7 @@ app.get('/seasons', async (req, res) => {
     const data = await response.json();
     const rewardsData = await rewardsResponse.json();
     level_10_reward = rewardsData.filter(reward => reward.requirement === "Level 10");
+    console.log(level_10_reward);
     image_url = level_10_reward.link;
     
     const { season, title } = data; // Adjust the destructured properties based on the API response structure
