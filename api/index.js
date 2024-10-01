@@ -62,6 +62,7 @@ app.get('/changelogs', async (req, res) => {
 app.get('/seasons', async (req, res) => {
   const seasonId = req.query.id; // Get the season ID from the query parameter
   const apiUrl = `https://api.jailbreakchangelogs.xyz/seasons/get?season=${seasonId}`; // Adjust this URL based on your API
+  const rewardsUrl = `https://api.jailbreakchangelogs.xyz/rewards/get?season=${seasonId}`; // Adjust this URL based on your API
 
   try {
     const response = await fetch(apiUrl, {
@@ -72,13 +73,27 @@ app.get('/seasons', async (req, res) => {
       },
     }); 
     if (!response.ok) {
-      res.render('seasons', { season: '???', title: 'Season not found' }); 
+      res.render('seasons', { season: '???', title: 'Season not found', image_url: 'https://res.cloudinary.com/dsvlphknq/image/upload/v1727054787/changelogs/changelog-image-287.png' }); 
     }
+    const rewardsResponse = await fetch(rewardsUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Origin': 'https://vercel.jailbreakchangelogs.xyz',
+      },
+    });
+    if (!rewardsResponse.ok) {
+      res.render('seasons', { season: '???', title: 'Season not found', image_url: 'https://res.cloudinary.com/dsvlphknq/image/upload/v1727054787/changelogs/changelog-image-287.png'}); 
+    }
+    
 
     const data = await response.json();
+    const rewardsData = await rewardsResponse.json();
+    level_10_reward = rewardsData.filter(reward => reward.requirement === "Level 10");
+    image_url = level_10_reward.link;
     
     const { season, title } = data; // Adjust the destructured properties based on the API response structure
-    res.render('seasons', { season, title }); // Render the seasons page with the retrieved data
+    res.render('seasons', { season, title, image_url }); // Render the seasons page with the retrieved data
 
   } catch (error) {
     console.error("Error fetching season data:", error);
