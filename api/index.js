@@ -54,6 +54,34 @@ app.get('/changelogs', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+app.get('/seasons', async (req, res) => {
+  const seasonId = req.query.id; // Get the season ID from the query parameter
+  const apiUrl = `https://api.jailbreakchangelogs.xyz/seasons/get?season=${seasonId}`; // Adjust this URL based on your API
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Origin': 'https://vercel.jailbreakchangelogs.xyz',
+      },
+    }); 
+
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`);
+    }
+
+    const data = await response.json();
+    const { season, title } = data; // Adjust the destructured properties based on the API response structure
+    res.render('seasons', { season, title }); // Render the seasons page with the retrieved data
+
+  } catch (error) {
+    console.error("Error fetching season data:", error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 app.get('/hello', (req, res) => {
     res.send('Hello, World!')});
 
