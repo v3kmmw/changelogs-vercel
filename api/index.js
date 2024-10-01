@@ -82,9 +82,6 @@ app.get('/seasons', async (req, res) => {
   }
 });
 
-app.get('/hello', (req, res) => {
-    res.send('Hello, World!')});
-
 // Handle unknown routes by serving index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../index.html'));
