@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const token = getCookie("token");
+    const userid = sessionStorage.getItem("userid");
 
     if (token && !userid) {
       fetch("https://api.jailbreakchangelogs.xyz/users/get/token?token=" + token)

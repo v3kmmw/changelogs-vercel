@@ -1169,6 +1169,7 @@ $(document).ready(function () {
   const avatarUrl = sessionStorage.getItem("avatar");
   const userdata = JSON.parse(sessionStorage.getItem("user"));
   const commentsList = document.getElementById("comments-list");
+  const userid = sessionStorage.getItem("userid");
   if (userid) {
     commentinput.placeholder = "Comment as " + userdata.global_name;
     commentbutton.disabled = false;
