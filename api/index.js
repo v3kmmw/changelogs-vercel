@@ -6,6 +6,9 @@ const PORT = process.env.PORT || 5500; // Set the port
 const fs = require('fs');
 // Serve your static HTML, CSS, and JS files
 app.use(express.static(path.join(__dirname, '../')));
+app.use(cors({
+  origin: 'https://vercel.jailbreakchangelogs.xyz'
+}));
 console.log('Views directory:', path.join(__dirname, '../views'));
 // Serve the changelogs.html file
 app.get('/changelogs2', (req, res) => {
