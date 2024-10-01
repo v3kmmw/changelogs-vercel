@@ -10,6 +10,10 @@ app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello from Express!' });
 });
 
+app.get('/changelogs', (req, res) => {
+    res.sendFile(path.join(__dirname, '../changelogs.html'));
+  });
+
 // Handle unknown routes by serving index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../index.html'));
