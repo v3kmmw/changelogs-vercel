@@ -30,7 +30,7 @@ console.log(path.join(__dirname, '../views'));
 
 app.get('/changelogs', async (req, res) => {
   const changelogId = req.query.id;
-  const apiUrl = `https://api.jailbreakchangelogs.xyz/changelogs/get?id=${changelogId}&authorization=jbc-YJs6AA0hcfUVcae9o4jn5t6uIW94`;
+  const apiUrl = `https://api.jailbreakchangelogs.xyz/changelogs/get?id=${changelogId}`;
 
   try {
     const response = await fetch(apiUrl); 
