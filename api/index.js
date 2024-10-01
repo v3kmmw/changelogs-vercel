@@ -71,12 +71,8 @@ app.get('/seasons', async (req, res) => {
         'Origin': 'https://vercel.jailbreakchangelogs.xyz',
       },
     }); 
-    if (!response.status === 404) {
-      res.render('seasons', { season: '???', title: 'Season not found' }); 
-    }
-
     if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`);
+      res.render('seasons', { season: '???', title: 'Season not found' }); 
     }
 
     const data = await response.json();
