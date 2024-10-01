@@ -79,7 +79,7 @@ app.get('/seasons', async (req, res) => {
     
     const { season, title } = data; // Adjust the destructured properties based on the API response structure
     if (!season ||!title) {
-      res.render('seasons', { season: 'Season not found', title: 'Season not found' }); 
+      res.render('seasons', { season: '???', title: 'Season not found' }); 
     }// Render the seasons page with default values)
     res.render('seasons', { season, title }); // Render the seasons page with the retrieved data
 
