@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 5500; // Set the port
