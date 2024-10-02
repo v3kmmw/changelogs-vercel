@@ -11,7 +11,7 @@ const DATA_SOURCE_URL =
 
 app.use(express.static(path.join(__dirname, '../')));
 app.use(cors({
-  origin: 'https://vercel.jailbreakchangelogs.xyz'
+  origin: 'https://jailbreakchangelogs.xyz'
 }));
 // Serve the changelogs.html file
 app.get("/trade-data", async (req, res) => {
@@ -58,7 +58,7 @@ app.get('/changelogs', async (req, res) => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Origin': 'https://vercel.jailbreakchangelogs.xyz'
+          'Origin': 'https://jailbreakchangelogs.xyz'
         },
       }
     ); 
@@ -91,7 +91,7 @@ app.get('/seasons', async (req, res) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Origin': 'https://vercel.jailbreakchangelogs.xyz',
+        'Origin': 'https://jailbreakchangelogs.xyz',
       },
     }); 
     if (!response.ok) {
@@ -101,7 +101,7 @@ app.get('/seasons', async (req, res) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Origin': 'https://vercel.jailbreakchangelogs.xyz',
+        'Origin': 'https://jailbreakchangelogs.xyz',
       },
     });
     if (!rewardsResponse.ok) {
