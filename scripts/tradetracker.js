@@ -2,6 +2,26 @@ let allData = [];
 let currentPage = 1;
 const itemsPerPage = 20;
 
+function configureToastr() {
+  toastr.options = {
+    closeButton: true,
+    debug: false,
+    newestOnTop: false,
+    progressBar: true,
+    positionClass: "toast-bottom-right",
+    preventDuplicates: false,
+    onclick: null,
+    showDuration: "300",
+    hideDuration: "1000",
+    timeOut: "5000",
+    extendedTimeOut: "1000",
+    showEasing: "swing",
+    hideEasing: "linear",
+    showMethod: "fadeIn",
+    hideMethod: "fadeOut",
+  };
+}
+
 function fetchAndDisplayTradeData() {
   const apiUrl = "/trade-data";
 
@@ -58,6 +78,17 @@ function displayData() {
   });
 
   updatePagination(filteredData.length);
+}
+function clearFilters() {
+  document.getElementById("searchInput").value = "";
+  document.getElementById("filterType").value = "";
+  document.getElementById("sortBy").value = "TimesTraded_desc";
+  localStorage.removeItem("sortPreference");
+  currentPage = 1;
+  displayData();
+
+  // Show toast notification
+  toastr.success("Filters have been cleared", "Clear Filters");
 }
 
 function filterData(data) {
@@ -119,6 +150,7 @@ function hideLoadingOverlay() {
 
 document.addEventListener("DOMContentLoaded", () => {
   fetchAndDisplayTradeData();
+  configureToastr();
 
   document.getElementById("searchInput").addEventListener("input", displayData);
   document.getElementById("filterType").addEventListener("change", displayData);
@@ -142,6 +174,11 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("sortPreference", sortBy.value);
     displayData();
   });
+
+  // Add event listener for the clear button
+  document
+    .getElementById("clearFilters")
+    .addEventListener("click", clearFilters);
 
   // Load saved sort preference
   const savedSort = localStorage.getItem("sortPreference");
