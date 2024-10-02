@@ -1,6 +1,4 @@
-import { injectSpeedInsights } from '@vercel/speed-insights';
 
-injectSpeedInsights();
 document.addEventListener("DOMContentLoaded", () => {
   // Inject the Speed Insights code on every page load
     const path = window.location.pathname;
