@@ -141,6 +141,10 @@ app.get('/keys', (req, res) => {
   res.sendFile(path.join(__dirname, '../keys.html'));
 });
 
+app.get('/tradetracker', (req, res) => {
+  res.sendFile(path.join(__dirname, '../tradetracker.html'));
+});
+
 app.get('/botinvite', (req, res) => {
   res.sendFile(path.join(__dirname, '../botinvite.html'));
 });
