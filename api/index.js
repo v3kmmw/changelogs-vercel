@@ -48,7 +48,8 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views')); // Set the directory for your EJS files
 
 app.get('/changelogs', async (req, res) => {
-  const changelogId = req.query.id;
+  let changelogId = req.query.id || 1;
+  console.log(`Fetching changelog with ID: ${changelogId}`);
   const apiUrl = `https://api.jailbreakchangelogs.xyz/changelogs/get?id=${changelogId}`;
 
   try {
@@ -81,7 +82,7 @@ app.get('/changelogs', async (req, res) => {
 });
 
 app.get('/seasons', async (req, res) => {
-  const seasonId = req.query.id; // Get the season ID from the query parameter
+  let seasonId = req.query.id || 1; // Default to season 1 if no ID is provided
   const apiUrl = `https://api.jailbreakchangelogs.xyz/seasons/get?season=${seasonId}`; 
   const rewardsUrl = `https://api.jailbreakchangelogs.xyz/rewards/get?season=${seasonId}`; 
 
@@ -126,6 +127,34 @@ app.get('/seasons', async (req, res) => {
     console.error("Error fetching season data:", error);
     res.status(500).send('Internal Server Error');
   }
+});
+
+app.get('/timeline', (req, res) => {
+  res.sendFile(path.join(__dirname, '../timeline.html'));
+});
+
+app.get('/bot', (req, res) => {
+  res.sendFile(path.join(__dirname, '../bot.html'));
+});
+
+app.get('/keys', (req, res) => {
+  res.sendFile(path.join(__dirname, '../keys.html'));
+});
+
+app.get('/botinvite', (req, res) => {
+  res.sendFile(path.join(__dirname, '../botinvite.html'));
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../login.html'));
+});
+
+app.get('/privacy', (req, res) => {
+  res.sendFile(path.join(__dirname, '../privacy.html'));
+});
+
+app.get('/tos', (req, res) => {
+  res.sendFile(path.join(__dirname, '../tos.html'));
 });
 
 // Handle unknown routes by serving index.html
